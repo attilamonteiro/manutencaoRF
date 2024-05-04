@@ -1,0 +1,11 @@
+# Arquivos de dependências
+/node_modules
+/yarn.lock
+
+# Arquivos de build
+/build
+/dist
+
+# Arquivos temporários
+/.cache
+/.DS_Store
