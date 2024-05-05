@@ -15,7 +15,7 @@ function App() {
   }, []); // Executa apenas uma vez, quando o componente é montado inicialmente
 
   const configurarMedia = () => {
-    axios.post('http://localhost:5000/api/configurarMedia', { media: parseFloat(media) }) // Convertendo para float
+    axios.post('http://localhost:5000/api/configurarMedia', { media })
       .then(() => console.log('Média configurada com sucesso!'))
       .catch(err => console.error('Erro ao configurar a média:', err));
   };
@@ -38,12 +38,13 @@ function App() {
 
   const realizarManutencao = (tipoManutencao) => {
     axios.post('http://localhost:5000/api/realizarManutencao', { tipoManutencao })
-      .then(() => {
-        // Após marcar a manutenção como realizada, obtemos a próxima manutenção para reiniciar a contagem
-        obterProximaManutencao();
-      })
-      .catch(err => console.error('Erro ao marcar a manutenção como realizada:', err));
-  };
+        .then(res => {
+            // Atualiza o estado local para refletir as mudanças
+            setProximaManutencao(res.data);
+        })
+        .catch(err => console.error('Erro ao marcar a manutenção como realizada:', err));
+};
+
 
   const verificarManutencao = (proximaManutencao) => {
     if (proximaManutencao.trocaOleo <= 0) {
